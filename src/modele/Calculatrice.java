@@ -18,7 +18,7 @@ public class Calculatrice extends Observable {
         this.text ="";
     }
 
-    private int calcul(){
+    public int calcul(){
         if (operator.equals("+"))
             op1 = Addition.calcul(op1, op2);
         else if (operator.equals("-"))
@@ -35,7 +35,8 @@ public class Calculatrice extends Observable {
     }
 
     public void setOperator(String operator){
-        calcul();
+        if (operator != "")
+            calcul();
         this.operator = operator;
     }
 
@@ -60,7 +61,7 @@ public class Calculatrice extends Observable {
         c.setOp2(18);
         c.setOperator("-");
         c.setOp2(10);
-        c.setOperator("+");
+        c.calcul();
         System.out.println(c.getResult());
     }
 }
