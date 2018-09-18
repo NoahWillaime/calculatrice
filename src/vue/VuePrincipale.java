@@ -58,6 +58,7 @@ public class VuePrincipale implements Observer{
         panels[1].add(numberButtons[7]);
         panels[1].add(numberButtons[8]);
         panels[1].add(numberButtons[9]);
+        addButton.addActionListener(new OperatorListener(this.mod, Calculatrice.PLUS));
         panels[1].add(addButton);
 
         // layout = FlowLayout.LEFT
@@ -65,6 +66,7 @@ public class VuePrincipale implements Observer{
         panels[2].add(numberButtons[4]);
         panels[2].add(numberButtons[5]);
         panels[2].add(numberButtons[6]);
+        subtractButton.addActionListener(new OperatorListener(this.mod, Calculatrice.MINUS));
         panels[2].add(subtractButton);
 
         // layout = FlowLayout.LEFT
@@ -73,7 +75,7 @@ public class VuePrincipale implements Observer{
         panels[3].add(numberButtons[2]);
         panels[3].add(numberButtons[3]);
         panels[3].add(equateButton);
-
+        equateButton.addActionListener(new OperatorListener(this.mod, Calculatrice.EQUAL));
         // layout = FlowLayout.LEFT
         panels[4].setLayout(new FlowLayout(FlowLayout.LEFT));
         panels[4].add(numberButtons[0]);
@@ -104,6 +106,21 @@ public class VuePrincipale implements Observer{
         @Override
         public void actionPerformed(ActionEvent e) {
             calc.setText(calc.getText()+digit);
+        }
+    }
+
+    class OperatorListener implements ActionListener {
+        private int op;
+        private Calculatrice calc;
+
+        public OperatorListener(Calculatrice c, int op){
+            this.op = op;
+            this.calc = c;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e){
+            calc.setOperator(this.op);
         }
     }
 }

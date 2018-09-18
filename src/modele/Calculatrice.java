@@ -6,23 +6,32 @@ import modele.operateur.Soustraction;
 import java.util.Observable;
 
 public class Calculatrice extends Observable {
+    public static final int PLUS = -300;
+    public static final int MINUS = -200;
+    public static final int EQUAL = -100;
+
     private int op1;
     private int op2;
-    private String operator;
+    private int operator;
     private String text;
 
     public Calculatrice(){
         this.op1=0;
         this.op2=0;
-        this.operator="";
+        this.operator= 0;
         this.text ="";
     }
 
     public int calcul(){
-        if (operator.equals("+"))
+        if (operator == EQUAL)
+            op1 = calcul();
+        else if (operator == PLUS) {
             op1 = Addition.calcul(op1, op2);
-        else if (operator.equals("-"))
+            System.out.println(op1+"/"+op2);
+        }
+        else if (operator == MINUS) {
             op1 = Soustraction.calcul(op1, op2);
+        }
         return op1;
     }
 
@@ -34,10 +43,14 @@ public class Calculatrice extends Observable {
         this.op2 = op;
     }
 
-    public void setOperator(String operator){
-        if (operator != "")
+    public void setOperator(int operator){
+        setText("");
+        if (this.operator != 0) {
             calcul();
-        this.operator = operator;
+            setText(this.op1+"");
+        }
+        if (operator != Calculatrice.EQUAL)
+            this.operator = operator;
     }
 
     public int getResult(){
@@ -57,11 +70,11 @@ public class Calculatrice extends Observable {
     public static void main(String args[]){
         Calculatrice c = new Calculatrice();
         c.setOp1(32);
-        c.setOperator("+");
+        c.setOperator(Calculatrice.PLUS);
         c.setOp2(18);
-        c.setOperator("-");
+        c.setOperator(Calculatrice.MINUS);
         c.setOp2(10);
-        c.calcul();
+        c.setOperator(Calculatrice.EQUAL);
         System.out.println(c.getResult());
     }
 }
