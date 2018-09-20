@@ -13,11 +13,13 @@ public class Calculatrice extends Observable {
     private int op1;
     private int op2;
     private int operator;
+    private boolean op_set;
     private String text;
 
     public Calculatrice(){
         this.op1=0;
         this.op2=0;
+        this.op_set = false;
         this.operator= 0;
         this.text ="";
     }
@@ -27,7 +29,6 @@ public class Calculatrice extends Observable {
             op1 = calcul();
         else if (operator == PLUS) {
             op1 = Addition.calcul(op1, op2);
-            System.out.println(op1+"/"+op2);
         }
         else if (operator == MINUS) {
             op1 = Soustraction.calcul(op1, op2);
@@ -44,6 +45,12 @@ public class Calculatrice extends Observable {
     }
 
     public void setOperator(int operator){
+        if (op_set){
+            setOp2(Integer.parseInt(getText()));
+        } else {
+            op_set = true;
+            setOp1(Integer.parseInt(getText()));
+        }
         setText("");
         if (this.operator != 0) {
             calcul();
