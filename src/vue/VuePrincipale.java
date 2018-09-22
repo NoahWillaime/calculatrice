@@ -105,7 +105,10 @@ public class VuePrincipale implements Observer{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            calc.setText(calc.getText()+digit);
+            if (calc.getClear())
+                calc.setText(""+digit);
+            else
+                calc.setText(calc.getText()+digit);
         }
     }
 
