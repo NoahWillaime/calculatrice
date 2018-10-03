@@ -14,24 +14,29 @@ public class Calculatrice extends Observable {
     private int op2;
     private int operator;
     private boolean op_set;
+    private boolean clear;
     private String text;
 
     public Calculatrice(){
         this.op1=0;
         this.op2=0;
         this.op_set = false;
+        this.clear = false;
         this.operator= 0;
         this.text ="";
     }
 
     public int calcul(){
-        if (operator == EQUAL)
+        if (operator == EQUAL) {
             op1 = calcul();
-        else if (operator == PLUS) {
-            op1 = Addition.calcul(op1, op2);
+            op_set = false;
         }
-        else if (operator == MINUS) {
-            op1 = Soustraction.calcul(op1, op2);
+        else {
+            if (operator == PLUS) {
+                op1 = Addition.calcul(op1, op2);
+            } else if (operator == MINUS) {
+                op1 = Soustraction.calcul(op1, op2);
+            }
         }
         return op1;
     }
@@ -45,16 +50,17 @@ public class Calculatrice extends Observable {
     }
 
     public void setOperator(int operator){
-        if (op_set){
-            setOp2(Integer.parseInt(getText()));
-        } else {
-            op_set = true;
-            setOp1(Integer.parseInt(getText()));
-        }
-        setText("");
-        if (this.operator != 0) {
+        if (op_set) {
+            setOp2(getNumber());
             calcul();
-            setText(this.op1+"");
+            clear = true;
+            setText(this.op1);
+            op_set= false;
+        } else {
+            setOp1(getNumber());
+            op_set = true;
+            clear = true;
+            setText(0);
         }
         if (operator != Calculatrice.EQUAL)
             this.operator = operator;
@@ -64,12 +70,17 @@ public class Calculatrice extends Observable {
         return op1;
     }
 
-    public String getText() {
-        return text;
+    public int getNumber() {
+        return Integer.parseInt(text);
     }
 
-    public void setText(String t){
-        this.text = t;
+    public void setText(int number){
+        if (clear) {
+            this.text = number + "";
+            clear = false;
+        } else {
+            this.text += number;
+        }
         setChanged();
         notifyObservers();
     }

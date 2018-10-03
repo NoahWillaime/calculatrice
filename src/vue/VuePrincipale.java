@@ -91,7 +91,7 @@ public class VuePrincipale implements Observer{
 
     @Override
     public void update(Observable o, Object arg) {
-        textField.setText(((Calculatrice)o).getText());
+        textField.setText(((Calculatrice)o).getNumber()+"");
     }
 
     class DigitListener implements ActionListener {
@@ -105,10 +105,7 @@ public class VuePrincipale implements Observer{
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (calc.getClear())
-                calc.setText(""+digit);
-            else
-                calc.setText(calc.getText()+digit);
+            calc.setText(digit);
         }
     }
 
