@@ -6,6 +6,6 @@ public class main {
     public static void main(String args[]){
         Calculatrice modele = new Calculatrice();
         new VuePrincipale(modele);
-        new VueHexa(modele);
+      //  new VueHexa(modele);
     }
 }

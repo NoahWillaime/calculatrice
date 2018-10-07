@@ -50,20 +50,19 @@ public class Calculatrice extends Observable {
     }
 
     public void setOperator(int operator){
+        clear = true;
         if (op_set) {
             setOp2(getNumber());
             calcul();
-            clear = true;
             setText(this.op1);
-            op_set= false;
         } else {
             setOp1(getNumber());
             op_set = true;
-            clear = true;
             setText(0);
         }
         if (operator != Calculatrice.EQUAL)
             this.operator = operator;
+        clear = true;
     }
 
     public int getResult(){
